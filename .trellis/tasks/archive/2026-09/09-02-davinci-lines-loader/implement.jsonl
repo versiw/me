@@ -1,0 +1,6 @@
+{"file": ".trellis/tasks/09-02-davinci-lines-loader/research/RESEARCH.md", "reason": "原站逆向研究总纲:引入方式/图元清单/动画机制/时间节点,实现必须忠实复刻"}
+{"file": ".trellis/tasks/09-02-davinci-lines-loader/research/davinci-lines-svg.html", "reason": "原站加载 SVG 完整源(davinci-lines-svg.html),几何常量零改写复制来源"}
+{"file": ".trellis/tasks/09-02-davinci-lines-loader/research/davinci-lines-title.svg", "reason": "原站标题 SVG path 文字,占位文案所用资源"}
+{"file": ".trellis/tasks/09-02-davinci-lines-loader/research/davinci-lines.css", "reason": "原站相关 CSS 机制:描画/虚线/loader/complete/标题规则,复刻样板"}
+{"file": ".trellis/spec/frontend/index.md", "reason": "前端编码规范入口,实现前核对项目约定"}
+{"file": ".trellis/spec/guides/index.md", "reason": "思考引导:跨层思维与代码复用"}

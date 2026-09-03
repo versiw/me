@@ -1,0 +1,3 @@
+{"file": ".trellis/tasks/09-02-davinci-lines-loader/research/RESEARCH.md", "reason": "基准:几何元素/颜色/时序/机制是否符合原站证据"}
+{"file": ".trellis/tasks/09-02-davinci-lines-loader/research/davinci-lines.css", "reason": "对照检查 CSS 机制复刻的完整性(描边/虚线/loader/complete)"}
+{"file": ".trellis/spec/frontend/index.md", "reason": "质量检查依据:组件规范与质量指南"}
