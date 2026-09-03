@@ -1,0 +1,170 @@
+/*
+ * 加载页组件样式。时序变量定在组件根(仅组件内生效),值取自原站(见任务 research/)。
+ */
+
+/* BT Grotesk(woff2):仅声明有命中的 Regular;Bold/Mono/Italic 需用时在同族名下追加 */
+@font-face {
+  font-family: 'BT Grotesk';
+  src: url('../../assets/fonts/BTGrotesk-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 全屏黑色舞台(func:覆盖层 + 时序变量作用域) */
+.davinci-lines__stage {
+  --dl-dur: 3s; /* 描边时长(原站 --lines-duration) */
+  --dl-easing: cubic-bezier(0.34, 0.22, 0.47, 0.84); /* 原站 --lines-easing */
+  --dl-loading-dur: 6s; /* 中心框描画时长(原站 --lines-loading-duration) */
+  --dl-loading-easing: cubic-bezier(0.45, 0.28, 0.34, 0.84); /* 原站 --lines-loading-easing */
+  --dl-title-fade-dur: 0.52s; /* 标题淡入 */
+  --dl-title-delay: 6.2s; /* 标题淡入节点:几何画完(3s)→ 中心框闭合(6s)后浮现 */
+  --dl-title-sub-delay: 6.6s; /* 中文副行"诗维"稍晚进场 */
+
+  position: fixed;
+  inset: 0;
+  z-index: 1000; /* 加载页最前置 */
+  display: grid;
+  place-items: center;
+  background: #000;
+  overflow: hidden;
+  pointer-events: auto; /* 拦截底层交互:加载期间页面不可点击 */
+}
+
+/* 几何 SVG:meet 自动 letterbox 居中 */
+svg.davinci-lines {
+  width: 100%;
+  height: 100%;
+  color: #f7f7ee; /* currentColor,供 pattern 使用(原站 .davinci-lines{color:#f7f7ee}) */
+}
+
+/* 线条终态(默认即定格) */
+.davinci-lines :is(path, circle) {
+  stroke: #ffffff26; /* 白 15% */
+  stroke-width: 0.4px;
+}
+
+/* 圆:rotate-45 把描边起点转到对角线(否则右竖弧先出、闭合点偏右) */
+.dl-arc {
+  transform-box: fill-box;
+  transform-origin: 50%;
+}
+.dl-arc--top {
+  transform: rotate(-45deg);
+}
+.dl-arc--bottom {
+  transform: rotate(45deg);
+}
+
+/* 中心框:颜色复用 svg 的 currentColor(#f7f7ee),1px */
+.dl-frame-rect {
+  stroke: currentColor;
+  stroke-width: 1px;
+}
+
+/* 虚线:原站 pattern(1px 点 + 3px 空) */
+.dl-dashed {
+  stroke: url(#dashed-stroke);
+}
+.dl-dashed-v {
+  stroke: url(#dashed-stroke-vertical);
+}
+
+/* 标题(居中 overlay,终态可见) */
+.davinci-lines__title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  text-align: center;
+  width: min(304px, 60vw); /* 中心框内框(340-2×18px),窄屏收缩 */
+  pointer-events: none;
+}
+/* 标题两行共用基态 */
+.davinci-lines__title p {
+  margin: 0;
+  color: #f7f7ee;
+  font-weight: normal;
+}
+/* 主行 VERSIW(BT Grotesk)/ 中文副行 诗维 */
+.davinci-lines__title-line {
+  font-family: 'BT Grotesk', Georgia, 'Times New Roman', serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: clamp(12px, 2vw, 17px);
+  line-height: 1.4;
+}
+.davinci-lines__title-sub {
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  letter-spacing: 0.4em;
+  text-indent: 0.4em; /* 抵消尾字字距,视觉居中 */
+  font-size: clamp(11px, 1.5vw, 14px);
+  line-height: 1.6;
+  margin-top: 0.5em;
+}
+
+/* ---- @keyframes ---- */
+@keyframes dl-draw {
+  from {
+    stroke-dashoffset: 1px;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+/* 线条呼吸:亮白(75%)→ 15%(原站 line-fade,4s ease-out) */
+@keyframes dl-line-fade {
+  from {
+    stroke: #ffffffbf;
+  }
+  to {
+    stroke: #ffffff26;
+  }
+}
+@keyframes dl-fade-title {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 动画层(仅 no-preference;reduce 时直接呈现上方终态) */
+@media (prefers-reduced-motion: no-preference) {
+  /* 动画不继承:描画类必须逐元素标记 dl-draw */
+  .dl-draw,
+  .dl-frame-rect {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1px;
+  }
+
+  /* 同帧描画 3s + 呼吸 4s(原站 hero:active 与 animating 同帧) */
+  .dl-draw {
+    animation:
+      dl-draw var(--dl-dur, 3s) var(--dl-easing) 0s both,
+      dl-line-fade 4s ease-out 0s both;
+  }
+
+  /* 虚线只描画:呼吸会覆盖 pattern 引用 */
+  .dl-dashed,
+  .dl-dashed-v {
+    animation: dl-draw var(--dl-dur, 3s) var(--dl-easing) 0s both;
+  }
+
+  /* 连续画到 0:缺口停留 + 二次补画会形成"卡顿→突闭" */
+  .dl-frame-rect {
+    animation: dl-draw var(--dl-loading-dur, 6s) var(--dl-loading-easing) 0s both;
+  }
+
+  /* 闭合后浮现;副行仅覆盖 delay */
+  .davinci-lines__title-line,
+  .davinci-lines__title-sub {
+    opacity: 0;
+    animation: dl-fade-title var(--dl-title-fade-dur, 0.52s) ease-out var(--dl-title-delay, 6.2s)
+      both;
+  }
+  .davinci-lines__title-sub {
+    animation-delay: var(--dl-title-sub-delay, 6.6s);
+  }
+}
