@@ -368,10 +368,10 @@ export default function DavinciLoader() {
         className="pointer-events-none absolute left-1/2 top-1/2 w-[min(304px,60vw)] -translate-x-1/2 -translate-y-1/2 text-center"
         style={{ opacity: 0 }}
       >
-        <p className="m-0 font-normal text-[#f7f7ee] font-['BT_Grotesk',Georgia,'Times_New_Roman',serif] tracking-[0.22em] uppercase text-[clamp(12px,2vw,17px)] leading-[1.4]">
+        <p className="m-0 font-normal font-brand text-[#f7f7ee] tracking-[0.22em] uppercase text-[clamp(12px,2vw,17px)] leading-[1.4]">
           Versiw
         </p>
-        <p className="m-0 mt-[0.5em] font-normal text-[#f7f7ee] font-['PingFang_SC','Hiragino_Sans_GB','Microsoft_YaHei',sans-serif] tracking-[0.4em] text-[clamp(11px,1.5vw,14px)] leading-[1.6] indent-[0.4em]">
+        <p className="m-0 mt-[0.5em] font-normal font-brand text-[#f7f7ee] tracking-[0.4em] text-[clamp(11px,1.5vw,14px)] leading-[1.6] indent-[0.4em]">
           诗维
         </p>
       </div>
