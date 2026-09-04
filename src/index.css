@@ -1,1 +1,40 @@
 @import 'tailwindcss';
+
+/* BT Grotesk(woff2):仅声明有命中的 Regular;Bold/Mono/Italic 需用时在同族名下追加 */
+@font-face {
+  font-family: 'BT Grotesk';
+  src: url('./assets/fonts/BTGrotesk-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+ * 加载页动画主题(时序值取自原站,见任务 research/)。
+ * 组件内以 motion-safe:animate-dl-* 类应用,自动跟随 prefers-reduced-motion。
+ */
+@theme {
+  /* 描画 3s + 呼吸 4s(原站 hero:active 与 animating 同帧),与矩形闭合(JS 驱动)同帧开始。
+     矩形闭合与标题淡入由 DavinciLoader 门卫 JS 驱动(承担加载进度),不在此定义 */
+  --animate-dl-draw:
+    dl-draw 3s cubic-bezier(0.34, 0.22, 0.47, 0.84) 0s both, dl-line-fade 4s ease-out 0s both;
+
+  @keyframes dl-draw {
+    from {
+      stroke-dashoffset: 1px;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* 线条呼吸:亮白(75%)→ 15%(原站 line-fade,4s ease-out) */
+  @keyframes dl-line-fade {
+    from {
+      stroke: #ffffffbf;
+    }
+    to {
+      stroke: #ffffff26;
+    }
+  }
+}
