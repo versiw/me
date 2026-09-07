@@ -23,6 +23,7 @@ export default defineConfig({
       'LICENSE.md',
       'tsconfig.json',
       'tsconfig.*.json',
+      'scripts',
     ],
   },
   lint: {

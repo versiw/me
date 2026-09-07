@@ -29,10 +29,20 @@
   font-display: swap;
 }
 
+/* 设计 token(色值/命名取自 heronaiapp.com 的 --content--* 体系) */
 @theme {
-  /* Noto 未就位时中文落系统字体;补 woff2 后在文件上方加对应 @font-face */
+  --color-brand: #fa3600; /* 品牌橙红:加号、激活态 */
+  --color-primary: #282828; /* 主文字 */
+  --color-secondary: #414140; /* 次级文字 */
+  --color-terriary: #282828b8; /* 默认文字(70% 黑) */
+  --color-surface: #72726f;
+  --color-granite-gray: #626260;
+  --color-disable: #b4b4b0;
+  --color-border: #b3b3af; /* 网格线/卡尺刻度线统一灰 */
+
   --font-brand: 'BT Grotesk', 'Noto Serif SC', Georgia, 'Times New Roman', serif;
   --font-sans: 'BT Grotesk', 'Noto Sans SC', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'BT Grotesk Mono', ui-monospace, monospace; /* 等宽:编号、坐标标签 */
 
   /* 加载页动画(时序取自原站 research/) */
   --animate-dl-draw:
@@ -55,4 +65,40 @@
       stroke: #ffffff26;
     }
   }
+}
+
+/* 显性线条:1px 实体网格线(替代 border-t/r/b/l border-border 组合,命名取自原站 .line 体系) */
+@utility line {
+  border: 1px solid var(--color-border);
+}
+@utility line-t {
+  border-top: 1px solid var(--color-border);
+}
+@utility line-b {
+  border-bottom: 1px solid var(--color-border);
+}
+@utility line-l {
+  border-left: 1px solid var(--color-border);
+}
+@utility line-r {
+  border-right: 1px solid var(--color-border);
+}
+
+/* 背景资产:纸纹(bg.svg 124×124,内含纸面 PNG)与度量格栅(bg-deco.svg 64×64,四边刻度+角点) */
+:root {
+  --bg-img: url('./assets/svg/bg.svg');
+  --bg-grid: url('./assets/svg/bg-deco.svg');
+}
+
+body {
+  background-color: #f5f5ed;
+  background-image: var(--bg-img);
+  background-repeat: repeat;
+  background-size: auto;
+  color: var(--color-terriary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
 }
