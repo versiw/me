@@ -84,6 +84,22 @@
   border-right: 1px solid var(--color-border);
 }
 
+/* 外圈遮罩板材质:与 body 纸纹一致(转场时线外区域为本体遮盖,非透明) */
+@utility bg-paper {
+  background-color: #f5f5ed;
+  background-image: var(--bg-img);
+  background-repeat: repeat;
+  background-size: auto;
+}
+
+/* 模块级隐藏滚动条:谁用谁声明(展示页滚动容器),不影响 html/body */
+@utility no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chromium / Safari */
+  }
+}
+
 /* 背景资产:纸纹(bg.svg 124×124,内含纸面 PNG)与度量格栅(bg-deco.svg 64×64,四边刻度+角点) */
 :root {
   --bg-img: url('./assets/svg/bg.svg');
