@@ -1,5 +1,11 @@
 @import 'tailwindcss';
 
+/* 引入标准开源中文字体，跨 OS 完全一致且按需分包加载 */
+@import '@fontsource/noto-serif-sc/600.css';
+@import '@fontsource/noto-serif-sc/700.css';
+@import '@fontsource/noto-sans-sc/400.css';
+@import '@fontsource/noto-sans-sc/500.css';
+
 @font-face {
   font-family: 'BT Grotesk';
   src: url('./assets/fonts/BTGrotesk-Regular.woff2') format('woff2');
@@ -40,9 +46,9 @@
   --color-disable: #b4b4b0;
   --color-border: #b3b3af; /* 网格线/卡尺刻度线统一灰 */
 
-  --font-brand: 'BT Grotesk', 'Noto Serif SC', Georgia, 'Times New Roman', serif;
-  --font-sans: 'BT Grotesk', 'Noto Sans SC', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'BT Grotesk Mono', ui-monospace, monospace; /* 等宽:编号、坐标标签 */
+  --font-brand: 'BT Grotesk', 'Noto Serif SC', serif;
+  --font-sans: 'BT Grotesk', 'Noto Sans SC', sans-serif;
+  --font-mono: 'BT Grotesk Mono', ui-monospace, monospace;
 
   /* 加载页动画(时序取自原站 research/) */
   --animate-dl-draw:
