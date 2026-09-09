@@ -156,7 +156,7 @@ export default function Showcase() {
         ref={contentRef}
         className="relative min-h-screen w-full p-2.25 text-primary select-none"
       >
-        <Nav />
+        <Nav scrollerRef={scrollerRef} />
         <Hero />
         <Skills />
         <Projects />
