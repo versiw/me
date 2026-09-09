@@ -3,6 +3,7 @@ import Lenis from 'lenis';
 import gsap from 'gsap';
 import Nav from './Nav';
 import Hero from './Hero';
+import Skills from './Skills';
 import Projects from './Projects';
 import About from './About';
 import LogSection from './LogSection';
@@ -47,6 +48,16 @@ export default function Showcase() {
   // 锚点转场:收拢(板+线同速至中心十字)→ 驻留点滚动到目标 section → 展开回位。
   // 不用 lenis.stop() 锁滚动:stop 下 scrollTo(immediate/force) 全部失效,滚动切换用容器原生 scrollTo
   useEffect(() => {
+    // 滚动落位:首屏锚点(#hero)滚到容器顶(Nav+Hero 同屏),其余落位 section 顶;
+    // 原生滚动后回传 Lenis 对齐,避免平滑器把位置拉回
+    const scrollToHash = (hash: string) => {
+      const scroller = scrollerRef.current;
+      if (!scroller) return;
+      const target = document.getElementById(hash.slice(1));
+      const top = hash === '#hero' ? 0 : target ? target.offsetTop : 0;
+      scroller.scrollTo({ top, behavior: 'auto' });
+      lenisRef.current?.scrollTo(scroller.scrollTop, { immediate: true });
+    };
     const shown = (hash: string) => {
       const scroller = scrollerRef.current;
       if (!scroller || transitioningRef.current) return;
@@ -62,14 +73,7 @@ export default function Showcase() {
         },
       });
       tl.to(scroller, { '--fp-y': `${cy}px`, '--fp-x': `${cx}px` }, 0)
-        .add(() => {
-          // 首屏锚点滚到容器顶(Nav+Hero 同屏),其余落位 section 顶
-          const target = document.getElementById(hash.slice(1));
-          const top = hash === '#hero' ? 0 : target ? target.offsetTop : 0;
-          scroller.scrollTo({ top, behavior: 'auto' });
-          // 原生滚动后回传 Lenis 对齐,避免平滑器把位置拉回
-          lenisRef.current?.scrollTo(scroller.scrollTop, { immediate: true });
-        })
+        .add(() => scrollToHash(hash))
         .to({}, { duration: 0.2 }, '>')
         .to(scroller, { '--fp-y': `${fp0}px`, '--fp-x': `${fp0}px` }, '>');
       tlRef.current = tl;
@@ -81,11 +85,22 @@ export default function Showcase() {
       const a = e.target instanceof Element ? e.target.closest('a[href^="#"]') : null;
       if (!a) return;
       e.preventDefault();
+      // URL 同步锚点(pushState 不触发 hashchange,不会引起二次滚动)
+      history.pushState(null, '', a.getAttribute('href')!);
       shown(a.getAttribute('href')!);
     };
+    // 浏览器前进/后退(或手动改 URL)时,URL 已变化 → 走转场滚动回对应 section;
+    // 空 hash(退到无锚点状态)等同回首页
+    const onHashChange = () => {
+      shown(location.hash || '#hero');
+    };
     document.addEventListener('click', onClick);
+    window.addEventListener('hashchange', onHashChange);
+    // 加载时 URL 已带锚点(刷新/分享链接)→ 直达 section,不走转场(首屏无动画)
+    if (location.hash) scrollToHash(location.hash);
     return () => {
       document.removeEventListener('click', onClick);
+      window.removeEventListener('hashchange', onHashChange);
       tlRef.current?.kill();
       tlRef.current = null;
     };
@@ -143,6 +158,7 @@ export default function Showcase() {
       >
         <Nav />
         <Hero />
+        <Skills />
         <Projects />
         <About />
         <LogSection />

@@ -1,4 +1,4 @@
-// 顶部导航:文档流内第一屏顶部(距视口 9px 即框内),左侧品牌 + 右侧 5 等分菜单单元格。
+// 顶部导航:文档流内第一屏顶部(距视口 9px 即框内),左侧品牌 + 右侧 6 等分菜单单元格。
 // line 四周闭合(顶/左/右与视口外框同位重合),为后续 gsap 吸顶效果预留完整的框条。
 // 菜单项为真实锚点(<a href="#section">),点击由 Showcase 接管转场;布局/样式维持原样,仅 span → a
 export default function Nav() {
@@ -14,12 +14,19 @@ export default function Nav() {
         </a>
       </div>
 
-      {/* 右侧区域:5 个等分单元格 (占宽 50%,每个单元格左上对齐排版) */}
-      <nav className="w-1/2 grid grid-cols-5 h-full">
+      {/* 右侧区域:6 个等分单元格 (占宽 50%,每个单元格左上对齐排版) */}
+      <nav className="w-1/2 grid grid-cols-6 h-full">
         {/* 关于我 */}
         <div className="h-full p-3 flex flex-col justify-between line-r text-terriary">
           <a href="#about" className="font-sans leading-[1.1]">
             关于我
+          </a>
+        </div>
+
+        {/* 技能 */}
+        <div className="h-full p-3 flex flex-col justify-between line-r text-terriary">
+          <a href="#skills" className="font-sans leading-[1.1]">
+            技能
           </a>
         </div>
 
