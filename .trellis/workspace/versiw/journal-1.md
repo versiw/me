@@ -47,3 +47,24 @@
 ### Status
 
 [OK] **Completed**
+
+
+## Session 3: 项目展示分区:2 列大卡片与预览视频
+
+**Date**: 2026-09-10
+**Task**: 项目展示分区:2 列大卡片与预览视频
+**Branch**: `main`
+
+### Summary
+
+实现 #projects 分区(2 列大卡片、16:9 预览位、悬停起播、零首屏视频流量);4K 录屏转码为 1440x810/30fps(2 个共 2.4MB);修复本机 CRLF 与 fmt 冲突;移除技能分区标题行
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `f417b7c` | (see git log) |
+
+### Status
+
+[OK] **Completed**
