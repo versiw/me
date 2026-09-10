@@ -1,0 +1,5 @@
+{"file": ".trellis/spec/frontend/quality-guidelines.md", "reason": "检查项:质量门命令必跑、性能红线(首屏零全片流量/无 console)、禁止模式"}
+{"file": ".trellis/spec/frontend/component-guidelines.md", "reason": "检查组件结构/可访问性/反模式,以及分区布局模式中的视频加载约定是否落实"}
+{"file": ".trellis/spec/guides/code-reuse-thinking-guide.md", "reason": "检查是否有重复实现可复用(如 line-*/分隔线/预览位模式)"}
+{"file": ".trellis/tasks/09-10-projects-showcase/research/video-transcode-spec.md", "reason": "核对转码产物体积与参数是否符合 25MB 约束与质量要求"}
+{"file": ".trellis/tasks/09-10-projects-showcase/research/heron-projects-section.md", "reason": "检查实现是否与参考区结构规格一致"}

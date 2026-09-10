@@ -1,0 +1,6 @@
+{"file": ".trellis/spec/frontend/index.md", "reason": "前端总则:静态优先/Lighthouse 红线、token 与 @utility 优先、动效双核心(GSAP+Lenis)"}
+{"file": ".trellis/spec/frontend/component-guidelines.md", "reason": "组件形态与 props 约定、可访问性、反模式;分区布局模式(grid-2-divide / 视频懒加载与悬停起播)"}
+{"file": ".trellis/spec/frontend/directory-structure.md", "reason": "文件放置规则与 .astro/.tsx 取舍约定(本任务保持 .tsx 的决策依据)"}
+{"file": ".trellis/spec/frontend/quality-guidelines.md", "reason": "质量门命令(vp check / vp run check / vp run build)与禁止模式"}
+{"file": ".trellis/tasks/09-10-projects-showcase/research/heron-projects-section.md", "reason": "参考区结构规格(截图提取),版式与 token 映射依据"}
+{"file": ".trellis/tasks/09-10-projects-showcase/research/video-transcode-spec.md", "reason": "预览视频转码参数、实测体积与复用流程(含 25MB 部署约束)"}
