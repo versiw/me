@@ -7,3 +7,6 @@
 # picking either side (task state lives in task.json, not index.md). See
 # .trellis/spec/cli/backend/directory-structure.md for details.
 .trellis/workspace/*/journal-*.md merge=union
+
+# 统一换行符为 LF:覆盖本机 core.autocrlf(Windows 检出会写成 CRLF),与 vite.config.ts 的 fmt.endOfLine 'lf' 对齐
+* text=auto eol=lf

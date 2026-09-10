@@ -90,6 +90,32 @@
   border-right: 1px solid var(--color-border);
 }
 
+/* 列内分段线:1px 虚线(同网格线色),用于项目分区的列内上下分隔 */
+@utility line-dash-t {
+  border-top: 1px dashed var(--color-border);
+}
+@utility line-dash-b {
+  border-bottom: 1px dashed var(--color-border);
+}
+
+/* 2 列网格分隔:窄屏相邻项间上边线;≥lg 转为偶数列左边线 + 次行起上边线(断点与组件 lg: 前缀一致) */
+@utility grid-2-divide {
+  & > * + * {
+    border-top: 1px solid var(--color-border);
+  }
+  @media (min-width: 64rem) {
+    & > * + * {
+      border-top: 0;
+    }
+    & > *:nth-child(even) {
+      border-left: 1px solid var(--color-border);
+    }
+    & > *:nth-child(n + 3) {
+      border-top: 1px solid var(--color-border);
+    }
+  }
+}
+
 /* 外圈遮罩板材质:与 body 纸纹一致(转场时线外区域为本体遮盖,非透明) */
 @utility bg-paper {
   background-color: #f5f5ed;

@@ -33,7 +33,7 @@ Astro 7 + React 19 混合的单页型个人展示站(src/components/Showcase 是
 | Guide | Description |
 |-------|-------------|
 | [Directory Structure](./directory-structure.md) | 项目文件组织与放置规则 |
-| [Component Guidelines](./component-guidelines.md) | 组件结构、props、命名、生命周期 |
+| [Component Guidelines](./component-guidelines.md) | 组件结构、props、命名、生命周期、分区布局模式 |
 | [Hook Guidelines](./hook-guidelines.md) | 自定义 hook 与客户端副作用模式 |
 | [State Management](./state-management.md) | 状态管理(本项目为局部 useState/useRef 为主) |
 | [Quality Guidelines](./quality-guidelines.md) | 质量度量、测试、构建、禁止模式 |

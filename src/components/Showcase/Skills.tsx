@@ -59,17 +59,7 @@ const CORE_ABILITIES = [
 export default function Skills() {
   return (
     <section id="skills" className="flex h-[calc(100dvh-18px)] flex-col line-b">
-      {/* 标题行:技能 标题 + mono 计数标签 */}
-      <div className="flex items-baseline justify-between px-8 md:px-10 pt-6 pb-4 line-b">
-        <h2 className="font-brand font-bold text-3xl md:text-5xl tracking-[-0.04em] text-primary">
-          技能
-        </h2>
-        <p className="font-mono text-xs uppercase tracking-[0.08em] text-secondary">
-          Stack · {SKILLS.length} Tools
-        </p>
-      </div>
-
-      {/* 主体:左技能墙 + 右核心能力 */}
+      {/* 左技能墙 + 右核心能力 */}
       <div className="relative flex min-h-0 flex-1 flex-col lg:flex-row">
         {/* 左:DriftWall 技能墙(布局占 55%) */}
         <div className="relative min-h-0 flex-1 lg:w-[55%]">
