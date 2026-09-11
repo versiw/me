@@ -132,6 +132,19 @@
   }
 }
 
+/* 全站屏蔽视频 UA 控件:本站视频只有"装饰性预览"一种语义,原生控件(含画中画)永远不该出现,
+   故作为产品决策写在 base 而非 utility —— 不依赖每个使用者记得声明。
+   Blink / WebKit 的 UA shadow DOM 覆盖层(容器 + 面板 + 播放按钮 + iOS 起播按钮) */
+@layer base {
+  video::-webkit-media-controls,
+  video::-webkit-media-controls-enclosure,
+  video::-webkit-media-controls-panel,
+  video::-webkit-media-controls-play-button,
+  video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+  }
+}
+
 /* 背景资产:纸纹(bg.svg 124×124,内含纸面 PNG)与度量格栅(bg-deco.svg 64×64,四边刻度+角点) */
 :root {
   --bg-img: url('./assets/svg/bg.svg');

@@ -121,6 +121,16 @@ tlRef.current = null;
 
 整列可点击时 `<a>` 自己就是 `.group`,而 `group-hover:` **只对后代生效,无法作用于 `<a>` 自身的边框/背景**。若要线框高亮,须在 `<a>` 上直接写 `hover:border-*`。
 
+### 卡片跳转入口:不做整列热区
+
+大卡片**不做整列可点** —— 整块热区让"悬停预览"与"点击跳转"两个意图互相干扰,也容易误触;卡片里越是有值得看的内容(视频、图),整列热区越亏。做法:卡片根元素是 `<article>`,只承接悬停起播与 `group-hover`;跳转入口是卡片文字块右侧的箭头方框。
+
+- 方框 36px 见方(`h-9 w-9`),高于 WCAG 2.2 AA 的 **24 CSS px** 指针目标下限;相邻目标之间留 ≥8px
+- 纯图标链接**必须**有 `aria-label`(如 `访问 ${title}(新标签页打开)`),外链并带 `target="_blank"` + `rel="noopener noreferrer"`
+- 方框**常显**,不做 `opacity-0 → group-hover` 的渐显:它是唯一入口,藏起来等于藏起跳转能力
+- 只让方框自身的 `hover:`/`focus-visible:` 变色,卡片其余位置的悬停不变 —— 否则又在暗示"整块可点"
+- 上下文:这样做等于放弃上一节那种整列 `<a>`;两者是取舍关系,不是叠加关系
+
 ### 视频预览:懒加载 + 悬停起播
 
 展示用视频不要让它在首屏自动加载整片。约定:
@@ -129,6 +139,7 @@ tlRef.current = null;
 - **悬停/聚焦才 `play()`,离开即 `pause()`**:在卡片根元素上做事件委托(`e.currentTarget.querySelector('video')`),省去每张卡片一个 ref
 - `muted` + `loop` + `playsInline`;`prefers-reduced-motion` 用户不起播(保留 poster)
 - 视频对读屏无信息量 → 加 `aria-hidden`
+- **屏蔽 UA 媒体控件**:展示视频绝不接受浏览器接管 —— 元素上加 `disablePictureInPicture` + `disableRemotePlayback`;`::-webkit-media-controls-*` 覆盖层的隐藏写进 `index.css` 的 `@layer base` **全站生效**(本站视频只有装饰预览一种语义,故不做 utility —— 这是产品决策,不该靠使用者记得声明);**`<video>` 上再加 `pointer-events-none`**,让鼠标/点击在命中测试中穿过视频、径直到达承载悬停起播的卡片根元素(该行为与"卡片根元素是谁"耦合,故留在元素上)。浏览器收不到对视频的交互,就不会浮出画中画等原生控件破坏视觉
 - 带宽预算:1440×810 / 30fps / H.264 CRF22 的 8 秒录屏约 1.1MB(同源 4K 录制 12MB);**单个静态文件硬上限 25MB**(Cloudflare 部署约束)
 - 因此分区**允许这类最小 JS**:无 `useState`、无 `useEffect`,只用 JSX 事件属性
 

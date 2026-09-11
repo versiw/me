@@ -1,7 +1,7 @@
-// 项目分区:顶部标题区 + 2 列大卡片(16:9 预览位),整列外链新标签打开;预览放得下 PC 录屏的界面细节。
-// 视频性能:默认只渲染 poster,preload=metadata 不拉全片;悬停/聚焦才 play、离开即 pause → 首屏零全片流量。
+// 项目分区:顶部标题区 + 2 列大卡片(16:9 预览位);跳转入口是文字块右侧的箭头方框,卡片本身不响应点击。
+// 视频:首屏只加载 poster;preload=metadata 仅取 moov(转码已 faststart,约 4KB),悬停/聚焦才 play、离开即 pause。
 // 尊重 prefers-reduced-motion(该偏好下不起播,保留 poster);无视频的项目沿用 16:9 文本占位。
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 type Project = {
   index: string; // 序号,渲染为 [01]
@@ -9,8 +9,8 @@ type Project = {
   title: string;
   desc: string;
   href: string;
-  video?: string; // 预览视频(public/videos/,自 4K 录制转码为 1440×810/30fps)
-  poster?: string; // 视频封面(WebP,首屏只加载它)
+  video?: string; // 预览视频(public/projects/,自 4K 录制转码为 1440×810/30fps)
+  poster?: string; // 视频封面(WebP,首屏只加载它);仅在 video 存在时生效
 };
 
 // 占位数据:03/04 的文案与外链待补;视频就位后填 video/poster
@@ -52,6 +52,7 @@ const PROJECTS: Project[] = [
 // 起播/暂停:在卡片根元素上做委托,省去每张卡片一个 ref;reduced-motion 下不起播
 const playPreview = (card: HTMLElement) => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // 快速划过卡片时起播会被紧随的 pause 打断,play() 以 AbortError 拒绝 —— 预期路径,不必上报
   card
     .querySelector('video')
     ?.play()
@@ -64,32 +65,28 @@ const pausePreview = (card: HTMLElement) => {
 export default function Projects() {
   return (
     <section id="projects" className="flex flex-col line-b">
-      {/* 标题区:大标题 + 右侧说明与品牌色方块 */}
-      <div className="flex flex-col gap-6 px-8 pt-8 pb-8 md:px-10 lg:flex-row lg:items-start lg:justify-between">
+      {/* 标题区:大标题 + 右侧说明 */}
+      <div className="line-b flex flex-col gap-6 px-8 pt-8 pb-8 md:px-10 lg:flex-row lg:items-start lg:justify-between">
         <h2 className="font-brand font-bold text-3xl md:text-5xl tracking-[-0.04em] text-primary">
-          精选项目
+          构建档案
         </h2>
         <div className="shrink-0 lg:w-1/4">
           <p className="text-sm leading-relaxed text-secondary">
-            这个分区的说明段落占位,后续替换为真实文案。
+            有的在真实世界里稳定运行，有的只是为了验证某个有趣的念头。记录已交付的产品，与试验台上的原型。
           </p>
-          <span aria-hidden className="mt-3 block h-3 w-3 bg-brand" />
         </div>
       </div>
 
       {/* 主体:2 列大卡片(grid-2-divide 窄屏转为上边线) */}
       <div className="grid-2-divide grid grid-cols-1 lg:grid-cols-2">
         {PROJECTS.map((project) => (
-          <a
+          <article
             key={project.index}
-            href={project.href}
-            target="_blank"
-            rel="noopener noreferrer"
             onMouseEnter={(e) => playPreview(e.currentTarget)}
             onMouseLeave={(e) => pausePreview(e.currentTarget)}
             onFocus={(e) => playPreview(e.currentTarget)}
             onBlur={(e) => pausePreview(e.currentTarget)}
-            className="group flex flex-col focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-brand"
+            className="group flex flex-col"
           >
             {/* 标签行:mono 标签 + [0N] 编号 */}
             <div className="flex items-baseline justify-between gap-3 px-8 pt-6 pb-5 md:px-10">
@@ -104,6 +101,7 @@ export default function Projects() {
             {/* 预览位:16:9,有视频则渲染 <video>(首屏仅 poster),否则文本占位 */}
             <div className="line-dash-t line-dash-b relative aspect-video overflow-hidden bg-primary/5">
               {project.video ? (
+                // 展示用视频不接受 UA 媒体交互:浏览器收不到事件,就不会浮出画中画等原生控件
                 <video
                   aria-hidden
                   src={project.video}
@@ -112,7 +110,9 @@ export default function Projects() {
                   loop
                   playsInline
                   preload="metadata"
-                  className="h-full w-full object-cover"
+                  disablePictureInPicture
+                  disableRemotePlayback
+                  className="pointer-events-none h-full w-full object-cover"
                 />
               ) : (
                 <div className="flex h-full items-center justify-center">
@@ -126,21 +126,25 @@ export default function Projects() {
               )}
             </div>
 
-            {/* 标题 + 描述 */}
-            <div className="px-8 pt-6 pb-8 md:px-10">
-              <div className="flex items-start justify-between gap-3">
+            {/* 左标题描述、右跳转方框:方框垂直居中于左侧整块 */}
+            <div className="flex items-center justify-between gap-4 px-8 pt-6 pb-8 md:px-10">
+              <div className="min-w-0">
                 <h3 className="font-brand font-bold text-xl md:text-2xl tracking-[-0.03em] text-primary">
                   {project.title}
                 </h3>
-                <ArrowUpRight
-                  aria-hidden
-                  strokeWidth={1.5}
-                  className="mt-1 h-5 w-5 shrink-0 text-brand opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
-                />
+                <p className="mt-3 text-sm leading-relaxed text-secondary">{project.desc}</p>
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-secondary">{project.desc}</p>
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`访问 ${project.title}(新标签页打开)`}
+                className="flex h-9 w-9 shrink-0 items-center justify-center border border-border text-primary transition-colors duration-200 hover:border-brand hover:text-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                <ArrowRight aria-hidden strokeWidth={1.5} className="h-4 w-4" />
+              </a>
             </div>
-          </a>
+          </article>
         ))}
       </div>
     </section>
