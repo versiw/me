@@ -39,7 +39,7 @@ const shown = (hash: string) => {
 导航点击 → 全局事件委托 → 转场函数操作共享 DOM 的 CSS 变量 → 状态变化只在你掌控的组件内。
 
 ```
-<a href="#log"> click
+<a href="#skills"> click
   → document 级拦截(e.target.closest('a[href^="#"]'))
   → preventDefault + showTransition(hash)
   → gsap tween --fp-y/--fp-x → 原生 scrollTo(section)

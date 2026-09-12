@@ -1,8 +1,14 @@
 ---
 import Showcase from '../components/Showcase';
 import Layout from '../layouts/Layout.astro';
+import DavinciLoader from '../components/DavinciLoader';
+
+// 首页专属,故挂在页面而非共享 Layout;构建恒启用,开发环境由 PUBLIC_DAVINCI_LOADER 决定
+const enableDavinciLoader =
+  import.meta.env.PROD || import.meta.env.PUBLIC_DAVINCI_LOADER === 'true';
 ---
 
 <Layout>
+	{enableDavinciLoader && <DavinciLoader client:load />}
 	<Showcase client:load />
 </Layout>

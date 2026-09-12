@@ -1,5 +1,6 @@
 // 顶部导航:sticky 吸顶(与外框顶线同位 9px),向下滚动滑出隐藏、向上滚动滑入显示;
-// 方向由 scroller.scrollTop 差值判定,菜单项为真实锚点,点击由 Showcase 接管转场。
+// 方向由 scroller.scrollTop 差值判定,菜单项为真实锚点,点击由 Showcase 接管转场;
+// 「联系我」暂无对应分区,与「关于我」同样回落 #hero。
 import { useEffect, useRef, type RefObject } from 'react';
 import gsap from 'gsap';
 
@@ -49,10 +50,10 @@ export default function Nav({ scrollerRef }: { scrollerRef: RefObject<HTMLDivEle
         </a>
       </div>
 
-      {/* 右侧区域:6 个等分单元格 (占宽 50%,每个单元格左上对齐排版) */}
-      <nav className="w-1/2 grid grid-cols-6 h-full">
+      {/* 右侧区域:4 个等分单元格 (占宽 50%,每个单元格左上对齐排版) */}
+      <nav className="w-1/2 grid grid-cols-4 h-full">
         <div className="h-full p-3 flex flex-col justify-between line-r text-terriary">
-          <a href="#about" className="font-sans leading-[1.1]">
+          <a href="#hero" className="font-sans leading-[1.1]">
             关于我
           </a>
         </div>
@@ -69,22 +70,9 @@ export default function Nav({ scrollerRef }: { scrollerRef: RefObject<HTMLDivEle
           </a>
         </div>
 
-        {/* 日志 (右下角带折角角标 ⌟) */}
-        <div className="relative h-full p-3 flex flex-col justify-between line-r text-terriary">
-          <a href="#log" className="font-sans leading-[1.1]">
-            日志
-          </a>
-        </div>
-
-        <div className="h-full p-3 flex flex-col justify-between line-r text-terriary">
-          <a href="#resume" className="font-sans leading-[1.1]">
-            简历
-          </a>
-        </div>
-
-        {/* 联系我 (品牌橙红 + 右下角箭头) */}
-        <div className="relative h-full p-3 flex flex-col justify-between text-brand">
-          <a href="#footer" className="font-sans leading-[1.1]">
+        {/* 联系我 (品牌橙红;暂无对应分区,与「关于我」同样回落 #hero) */}
+        <div className="h-full p-3 flex flex-col justify-between text-brand">
+          <a href="#hero" className="font-sans leading-[1.1]">
             联系我
           </a>
         </div>

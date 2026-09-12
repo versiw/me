@@ -1,5 +1,8 @@
 // Hero 主区: 整屏一视口 —— 上部 ∞ 粒子画布盒(自适应伸缩) + 下部信息网格(大标语/简介/更多/状态)
-import InfiniteParticles from '../InfiniteParticles';
+// 粒子懒加载:three.js 约 500 KB 独立成 chunk,主 island 的 hydrate 不必等它
+import { lazy, Suspense } from 'react';
+
+const InfiniteParticles = lazy(() => import('../InfiniteParticles'));
 
 export default function Hero() {
   return (
@@ -7,7 +10,10 @@ export default function Hero() {
       {/* 粒子区: 允许自适应缩放，绝不顶爆下方内容 */}
       <div className="flex-1 min-h-0 flex items-center justify-center p-4">
         <div className="relative w-full max-w-215 aspect-16/10 max-h-full flex items-center justify-center">
-          <InfiniteParticles />
+          {/* fallback 拿 null:粒子的 canvas 只能由 JS 生成,本就没有可先渲染的内容 */}
+          <Suspense fallback={null}>
+            <InfiniteParticles />
+          </Suspense>
         </div>
       </div>
 

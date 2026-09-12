@@ -1,6 +1,6 @@
 // 项目分区:顶部标题区 + 2 列大卡片(16:9 预览位);跳转入口是文字块右侧的箭头方框,卡片本身不响应点击。
 // 视频:首屏只加载 poster;preload=metadata 仅取 moov(转码已 faststart,约 4KB),悬停/聚焦才 play、离开即 pause。
-// 尊重 prefers-reduced-motion(该偏好下不起播,保留 poster);无视频的项目沿用 16:9 文本占位。
+// 尊重 prefers-reduced-motion(该偏好下不起播,保留 poster)。
 import { ArrowRight } from 'lucide-react';
 
 type Project = {
@@ -9,17 +9,17 @@ type Project = {
   title: string;
   desc: string;
   href: string;
-  video?: string; // 预览视频(public/projects/,自 4K 录制转码为 1440×810/30fps)
-  poster?: string; // 视频封面(WebP,首屏只加载它);仅在 video 存在时生效
+  video: string; // 预览视频(public/projects/,录屏统一转码为 1440×810/30fps)
+  poster: string; // 视频封面(WebP,首屏只加载它)
 };
 
-// 占位数据:03/04 的文案与外链待补;视频就位后填 video/poster
+// 01-04 文案均已就位,外链仍为占位
 const PROJECTS: Project[] = [
   {
     index: '01',
     tag: 'AI Training',
     title: 'AI 视觉模型训练平台',
-    desc: '一句话说明这个项目解决的问题与亮点,后续替换为真实文案。',
+    desc: '从 0 到 1 构建的 AI 视觉模型训练平台，将命令行的模型配置与任务调度转化为可视化 Web 工作流。',
     href: 'https://example.com',
     video: '/projects/ai-training.mp4',
     poster: '/projects/ai-training-poster.webp',
@@ -28,7 +28,7 @@ const PROJECTS: Project[] = [
     index: '02',
     tag: 'AI Annotation',
     title: '多人协作图片标注平台',
-    desc: '一句话说明这个项目解决的问题与亮点,后续替换为真实文案。',
+    desc: '基于 Canvas 构建的多人协作图片标注平台，产出数据 100% 兼容 LabelMe JSON 规范。',
     href: 'https://example.com',
     video: '/projects/ai-anno.mp4',
     poster: '/projects/ai-anno-poster.webp',
@@ -36,16 +36,20 @@ const PROJECTS: Project[] = [
   {
     index: '03',
     tag: 'Web App',
-    title: '项目标题占位三',
-    desc: '一句话说明这个项目解决的问题与亮点,后续替换为真实文案。',
+    title: 'Staro 资源管理系统',
+    desc: '基于 Next.js 与 NestJS 构建的素材管理系统，支持上传、分类、向量检索与批量管理。',
     href: 'https://example.com',
+    video: '/projects/staro.mp4',
+    poster: '/projects/staro-poster.webp',
   },
   {
     index: '04',
-    tag: 'Open Source',
-    title: '项目标题占位四',
-    desc: '一句话说明这个项目解决的问题与亮点,后续替换为真实文案。',
+    tag: 'Proof of Concept',
+    title: 'VRAI 视觉推理系统',
+    desc: '以 Tauri + Rust + GStreamer 搭建的桌面端推理系统，验证完整的视觉模型推理。',
     href: 'https://example.com',
+    video: '/projects/vrai.mp4',
+    poster: '/projects/vrai-poster.webp',
   },
 ];
 
@@ -98,32 +102,21 @@ export default function Projects() {
               </span>
             </div>
 
-            {/* 预览位:16:9,有视频则渲染 <video>(首屏仅 poster),否则文本占位 */}
+            {/* 预览位:16:9,首屏只加载 poster */}
             <div className="line-dash-t line-dash-b relative aspect-video overflow-hidden bg-primary/5">
-              {project.video ? (
-                // 展示用视频不接受 UA 媒体交互:浏览器收不到事件,就不会浮出画中画等原生控件
-                <video
-                  aria-hidden
-                  src={project.video}
-                  poster={project.poster}
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  disablePictureInPicture
-                  disableRemotePlayback
-                  className="pointer-events-none h-full w-full object-cover"
-                />
-              ) : (
-                <div className="flex h-full items-center justify-center">
-                  <span
-                    aria-hidden
-                    className="font-mono text-xs uppercase tracking-[0.08em] text-disable"
-                  >
-                    [ Image ]
-                  </span>
-                </div>
-              )}
+              {/* 展示用视频不接受 UA 媒体交互:浏览器收不到事件,就不会浮出画中画等原生控件 */}
+              <video
+                aria-hidden
+                src={project.video}
+                poster={project.poster}
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                disablePictureInPicture
+                disableRemotePlayback
+                className="pointer-events-none h-full w-full object-cover"
+              />
             </div>
 
             {/* 左标题描述、右跳转方框:方框垂直居中于左侧整块 */}

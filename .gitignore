@@ -30,5 +30,4 @@ pnpm-debug.log*
 .env.*
 !.env.example
 
-# 原始视频素材(4K 录制,单个 12–21MB,不入库);转码产物在 public/videos/
 mp4s/

@@ -14,12 +14,11 @@ src/
 │   └── Layout.astro  # <html>/<head>/<body> + 全局 import('...index.css')
 ├── components/       # 共享组件与业务分区
 │   ├── InfiniteParticles.tsx   # WebGL ∞ 粒子(仅 Hero 用)
-│   ├── DavinciLoader.tsx       # 加载页门卫(当前被注释,未挂载)
-│   └── Showcase/     # 主页业务组件(占位+命名分区)
+│   ├── DavinciLoader.tsx       # 加载页(首页经 client:load 挂载,生产恒启用)
+│   └── Showcase/     # 主页业务组件(命名分区)
 │       ├── index.tsx           # 分区容器 + 外框转场 + 锚点拦截
-│       ├── Nav.tsx / Hero.tsx / Projects.tsx / About.tsx
-│       ├── LogSection.tsx / ResumeSection.tsx   # 占位 section
-│       └── Footer.tsx
+│       ├── Nav.tsx / Hero.tsx
+│       └── Skills.tsx / Projects.tsx
 ├── index.css         # 全局样式:Tailwind 4 @theme + @utility + body 背景
 └── assets/           # 静态资产
     ├── fonts/        # woff2(BT Grotesk ×4)

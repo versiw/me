@@ -5,10 +5,6 @@ import Nav from './Nav';
 import Hero from './Hero';
 import Skills from './Skills';
 import Projects from './Projects';
-import About from './About';
-import LogSection from './LogSection';
-import ResumeSection from './ResumeSection';
-import Footer from './Footer';
 
 import 'lenis/dist/lenis.css';
 
@@ -160,10 +156,6 @@ export default function Showcase() {
         <Hero />
         <Skills />
         <Projects />
-        <About />
-        <LogSection />
-        <ResumeSection />
-        <Footer />
       </div>
     </div>
   );

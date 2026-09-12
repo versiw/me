@@ -1,0 +1,14 @@
+# Cloudflare Pages 响应头。Pages 默认对所有资源 max-age=0 must-revalidate(每次回源校验),
+# 此处按资源特性放宽;HTML 入口不设规则,保持默认校验以确保新部署立刻可见。
+
+# 构建产物:文件名带内容 hash,内容变则 URL 变
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 项目预览素材:体积大、内容稳定;换同名文件后老访客缓存会留到过期,要即时生效请改名
+/projects/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 技能墙图标:无 hash,极少变动
+/simple-icons/*
+  Cache-Control: public, max-age=604800

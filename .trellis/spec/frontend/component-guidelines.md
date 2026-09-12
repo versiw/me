@@ -9,9 +9,9 @@
 - 大部分是**纯展示函数组件**,无 props 或极少 props,如:
 
 ```tsx
-// Projects.tsx(占位)
-export default function Projects() {
-  return <section id="projects" className="h-[calc(100dvh-18px)]" />;
+// Skills.tsx —— 技能数据作为模块级常量(SKILLS / CORE_ABILITIES),组件本身零出参
+export default function Skills() {
+  return <section id="skills" className="flex h-[calc(100dvh-18px)] flex-col line-b">…</section>;
 }
 ```
 
@@ -52,7 +52,7 @@ tlRef.current = null;
 
 ## 命名
 
-- 文件/组件:PascalCase,与用途对齐(Nav/Hero/Projects/About/Footer)。
+- 文件/组件:PascalCase,与用途对齐(Nav/Hero/Skills/Projects)。
 - 功能分区大组件用 index.tsx + 平铺子组件;单一可复用部件直接文件名。
 - CSS 工具类名 kebab(沿 Tailwind 习惯,`no-scrollbar`)。
 
